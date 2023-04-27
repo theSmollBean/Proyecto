@@ -1,0 +1,79 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+
+
+<script>
+var accessToken = "37d119fef414cd9b3b6a2cca12e0ab4b0df17bd2";
+var deviceID = "1d0026000d47373334323233"
+var url = "https://api.particle.io/v1/devices/" + deviceID + "/on";
+var urlState = "https://api.particle.io/v1/devices/" + deviceID + "/state";
+
+
+function switchOn()
+{
+	$.post(url, {params: "on", access_token: accessToken });
+}  
+
+function callback(data, status){
+	if (status == "success") {
+		
+		setTimeout(getReading, 1000);
+	}
+	else {
+		alert("There was a problem");
+	}
+
+}
+function getReading(){
+   	$.get(urlState, {access_token: accessToken}, callback);
+}
+
+</script>
+</head>	
+<style>
+	body {
+		background-image: url(../Media/Pecera.gif);
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		background-size: cover;
+	}
+
+	h1{
+		position: absolute;
+		top: 20px;
+		right: 600px;
+		color: fuchsia;
+		font-family: Lucida Sans;
+		font-size: 50px;
+		text-shadow: 3px 3px 3px #ffffff;
+	}
+
+	input{
+		background-color: #6c4675;
+		border-radius: 15px;
+		border: 3.5px solid #612e6d;
+		display: inline-block;
+		cursor: pointer;
+		color: #ffffff;
+		font-family: Lucida Sans;
+		font-size: 30px;
+		font-weight: bold;
+		padding: 17px 24px;
+		text-decoration: none;
+		text-shadow: 3px 3px 3px #612e6d;
+		position: relative;
+		top: 350px;
+		left: 280px;
+	}
+</style>
+<body>
+	<h1> Alimentador de peces </h1>
+
+	<input style="height:180px; width:350px;" id="botonON" type="button" onClick="switchOn()" value="ALIMENTAR" />
+
+	<div class="circulogreen" id="cgreen"></div>
+	<div class="circulored" id="cred"></div>
+
+</body>
+</html>
